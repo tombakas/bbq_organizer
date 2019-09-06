@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from pathlib import Path
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BBQ_ORGANIZER_DIR = os.path.join(BASE_DIR, "bbq_organizer")
+BASE_DIR = Path(os.path.abspath(__file__)).parents[2]
 
 ALLOWED_HOSTS = []
 
@@ -44,9 +45,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BBQ_ORGANIZER_DIR, "templates")
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
