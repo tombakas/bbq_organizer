@@ -10,7 +10,7 @@ ADMIN = $(PYBIN)/django-admin
 PYTHON_PATH = $(BASEDIR)
 
 SETTINGS_DEV = "config.settings.dev"
-SETTINGS_PRD = "config.settings.PRD"
+SETTINGS_PRD = "config.settings.prd"
 
 .PHONY: all
 all:
@@ -19,6 +19,10 @@ all:
 .PHONY: run
 run: $(PYTHON) $(ADMIN)
 	$(ADMIN) runserver --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV)
+
+.PHONY: migrate
+migrate: $(PYTHON) $(ADMIN)
+	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV)
 
 $(PYTHON):
 	virtualenv .venv
