@@ -1,4 +1,4 @@
-### BBQ planner functional requirements:
+#### BBQ planner functional requirements:
 
 **Creating a BBQ event**
 * A BBQ event organizer needs to be able to register and login
@@ -14,7 +14,7 @@
 * When registering, the visitor can select how many types of which meat he wants. The list of meat shown is configured by the BBQ organizer.
 
 
-####BBQ event summary / shopping list
+#### BBQ event summary / shopping list
 
 A logged in BBQ event organizer can an overview of his BBQ events.
 
