@@ -10,3 +10,7 @@ __pycache__
 
 # Sqlite database
 db.sqlite3
+
+# Yarn/node
+yarn.lock
+node_modules

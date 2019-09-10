@@ -5,5 +5,13 @@
   "repository": "git@github.com:tombakas/bbq_temp.git",
   "author": "Tomas Tombakas <tombakas@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "bulma": "^0.7.5",
+    "node-sass": "^4.12.0"
+  },
+  "scripts": {
+    "css-build": "yarn node-sass --output-style compressed --omit-source-map-url ./bbq_organizer/static_dev/scss/main.scss ./bbq_organizer/static/css/style.css",
+    "css-watch": "yarn css-build --watch"
+  }
 }
