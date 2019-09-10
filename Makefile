@@ -9,7 +9,8 @@ ADMIN = $(PYBIN)/django-admin
 
 PYTHON_PATH = $(BASEDIR)
 
-SETTINGS_DEV = "config.settings.dev"
+SETTINGS_DEV_SQLITE = "config.settings.dev_sqlite"
+SETTINGS_DEV_POSTGRES = "config.settings.dev_postgres"
 SETTINGS_PRD = "config.settings.prd"
 
 .PHONY: all
@@ -18,11 +19,11 @@ all:
 
 .PHONY: run
 run: $(PYTHON) $(ADMIN)
-	$(ADMIN) runserver --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV)
+	$(ADMIN) runserver --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
 .PHONY: migrate
 migrate: $(PYTHON) $(ADMIN)
-	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV)
+	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
 $(PYTHON):
 	virtualenv .venv
