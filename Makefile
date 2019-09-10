@@ -38,3 +38,11 @@ docker_run:
 .PHONY: down
 down:
 	docker-compose -f local.yml down
+
+.PHONY: css
+css:
+	yarn css-build
+
+.PHONY: css_watch
+css_watch:
+	yarn css-watch
