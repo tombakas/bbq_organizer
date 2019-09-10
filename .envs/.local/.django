@@ -1,0 +1,5 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+PYTHONPATH=/opt/app
+DJANGO_SETTINGS_MODULE=config.settings.dev_sqlite

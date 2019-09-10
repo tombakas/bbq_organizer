@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=bbq_temp
+POSTGRES_USER=tuZIdyuIDrhArhkFEFBDDdrIqJdsFWog
+POSTGRES_PASSWORD=mPVODgWSzkKArTN5oslKNSyGJC9u3QdX0rX8UiJ50tCIfU5pAuqiIgn3rW2nwFwG
