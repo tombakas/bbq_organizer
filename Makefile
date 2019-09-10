@@ -30,3 +30,11 @@ $(PYTHON):
 
 $(ADMIN): $(PYTHON)
 	$(PIP) install -r requirements.txt
+
+.PHONY: docker_run
+docker_run:
+	docker-compose -f local.yml up --build -d
+
+.PHONY: down
+down:
+	docker-compose -f local.yml down
