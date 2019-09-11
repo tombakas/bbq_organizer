@@ -1,5 +1,7 @@
 # General
 # ------------------------------------------------------------------------------
-USE_DOCKER=yes
+
+SECRET_KEY=fgtj2pic#t92)4gq$%e1%k!&r$&d=0)2s4sb^&8&m01q1hju(&
+DEBUG='true'
 PYTHONPATH=/opt/app
-DJANGO_SETTINGS_MODULE=config.settings.dev_sqlite
+DJANGO_SETTINGS_MODULE=config.settings.dev_postgres

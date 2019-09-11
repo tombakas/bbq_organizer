@@ -21,6 +21,7 @@ BASE_DIR = Path(os.path.abspath(__file__)).parents[2]
 env = environ.Env()
 
 ALLOWED_HOSTS = []
+LOGOUT_REDIRECT_URL = "/"
 
 # Application definition
 INSTALLED_APPS = [
