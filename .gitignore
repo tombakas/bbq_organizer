@@ -14,3 +14,6 @@ db.sqlite3
 # Yarn/node
 yarn.lock
 node_modules
+
+# css
+*css
