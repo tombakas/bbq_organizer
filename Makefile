@@ -33,7 +33,7 @@ $(ADMIN): $(PYTHON)
 
 .PHONY: docker_run
 docker_run:
-	docker-compose -f compose/dev.yml up --build
+	docker-compose -f compose/dev.yml up --build -d
 
 .PHONY: down
 down:
