@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="center-item">
+    <div class="login-form">
+      <h2>Sign up</h2>
+      <form method="post">
+        {% csrf_token %}
+        <table>
+          {% for field in form %}
+            <tr class="is-borderless">
+              <td>
+                <span class="has-text-weight-bold has-text-right">
+                  {{ field.label_tag }}
+                </span>
+                {% for error in field.errors %}
+                  <p class="has-text-danger max-width-200 is-size-7">{{ error }}</p>
+                {% endfor %}
+              </td>
+              <td>{{ field }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+        <a href="/" class="button is-light">Cancel</a>
+        <button class="button is-primary" type="submit">Sign up</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

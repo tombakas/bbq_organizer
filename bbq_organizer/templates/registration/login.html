@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block body %}
-  <div class="center-item-v">
+{% block content %}
+  <div class="center-item">
     <div class="login-form">
       <h2>Login</h2>
       <form method="post">
@@ -9,8 +9,9 @@
         <table>
           {{ form.as_table }}
         </table>
-        <button type="submit">Login</button>
+        <button class="button is-light" type="submit">Login</button>
+        <a href="/signup/" class="button is-light">Sign up</a>
       </form>
     </div>
   </div>
-{% endblock body %}
+{% endblock content %}
