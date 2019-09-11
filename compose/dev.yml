@@ -7,27 +7,27 @@ volumes:
 services:
   django:
     build:
-      context: .
+      context: ..
       dockerfile: ./compose/dev/django/Dockerfile
     image: bbq_organizer_dev_django
     depends_on:
       - postgres
     volumes:
-      - .:/opt/app
+      - ..:/opt/app
     env_file:
-      - ./.envs/.dev/.django
-      - ./.envs/.dev/.postgres
+      - ../.envs/.dev/.django
+      - ../.envs/.dev/.postgres
     ports:
       - "8000:8000"
     command: /start
 
   postgres:
     build:
-      context: .
+      context: ..
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: bbq_temp_production_postgres
+    image: bbq_organizer_production_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
     env_file:
-      - ./.envs/.dev/.postgres
+      - ../.envs/.dev/.postgres
