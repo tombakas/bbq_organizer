@@ -11,13 +11,13 @@ RUN apk update \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /opt/app/requirements
-RUN pip install -r /opt/app/requirements/local.txt
+RUN pip install -r /opt/app/requirements/dev.txt
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./compose/local/django/start /start
+COPY ./compose/dev/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
