@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <a href="accounts/logout/" class="button">Signout</a>
+  {% include "navbar.html" %}
+
+  <div class="center-items-vh">
+    <a class="button is-primary is-large">Create new event</a>
+  </div>
 {% endblock %}
