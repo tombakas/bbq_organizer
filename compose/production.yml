@@ -1,23 +1,21 @@
 version: '3'
 
 volumes:
-  local_postgres_data: {}
+  production_postgres_data: {}
 
 services:
   django:
     build:
       context: ..
-      dockerfile: ./compose/dev/django/Dockerfile
-    image: bbq_organizer_dev_django
+      dockerfile: ./compose/production/django/Dockerfile
+    image: bbq_organizer_production_django
     depends_on:
       - postgres
-    volumes:
-      - ..:/opt/app
     env_file:
-      - ../.envs/.dev/.django
-      - ../.envs/.dev/.postgres
+      - ../.envs/.production/.django
+      - ../.envs/.production/.postgres
     ports:
-      - "8000:8000"
+      - "8123:5000"
     command: /start
 
   postgres:
@@ -26,6 +24,6 @@ services:
       dockerfile: ./compose/production/postgres/Dockerfile
     image: bbq_organizer_production_postgres
     volumes:
-      - local_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data:/var/lib/postgresql/data
     env_file:
-      - ../.envs/.dev/.postgres
+      - ../.envs/.production/.postgres

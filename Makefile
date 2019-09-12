@@ -46,3 +46,7 @@ css:
 .PHONY: css_watch
 css_watch:
 	yarn css-watch
+
+.PHONY: database_url
+database_url:
+	@ echo "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
