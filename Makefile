@@ -10,7 +10,6 @@ ADMIN = $(PYBIN)/django-admin
 PYTHON_PATH = $(BASEDIR)
 
 SETTINGS_DEV_SQLITE = "config.settings.dev_sqlite"
-SETTINGS_DEV_POSTGRES = "config.settings.dev_postgres"
 SETTINGS_PRD = "config.settings.prd"
 
 .PHONY: all
@@ -31,13 +30,24 @@ $(PYTHON):
 $(ADMIN): $(PYTHON)
 	$(PIP) install -r requirements.txt
 
-.PHONY: docker_run
-docker_run:
+.PHONY: drun
+drun:
 	docker-compose -f compose/dev.yml up --build -d
 
+.PHONY: prun
+prun:
+	docker-compose -f compose/production.yml up --build -d
+
+.ONESHELL:
 .PHONY: down
 down:
-	docker-compose -f compose/dev.yml down
+	for env in production dev
+	do
+		if docker ps --format "table {{.Image}}" | grep ${env}_django
+		then
+			docker-compose -f compose/${env}.yml down
+		fi
+	done
 
 .PHONY: css
 css:
