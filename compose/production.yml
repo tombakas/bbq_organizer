@@ -2,20 +2,21 @@ version: '3'
 
 volumes:
   production_postgres_data: {}
+  static_volume: {}
 
 services:
   django:
     build:
       context: ..
       dockerfile: ./compose/production/django/Dockerfile
+    volumes:
+      - static_volume:/staticfiles
     image: bbq_organizer_production_django
     depends_on:
       - postgres
     env_file:
       - ../.envs/.production/.django
       - ../.envs/.production/.postgres
-    ports:
-      - "8123:5000"
     command: /start
 
   postgres:
@@ -27,3 +28,16 @@ services:
       - production_postgres_data:/var/lib/postgresql/data
     env_file:
       - ../.envs/.production/.postgres
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: ./compose/production/nginx/Dockerfile
+    ports:
+      - 8123:80
+    depends_on:
+      - django
+    volumes:
+      - static_volume:/staticfiles
+    command: [nginx-debug, '-g', 'daemon off;']
+ 

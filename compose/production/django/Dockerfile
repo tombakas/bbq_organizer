@@ -1,4 +1,3 @@
-
 FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
@@ -33,9 +32,14 @@ COPY . /opt/app/
 
 RUN chown -R django /opt/app
 
+RUN mkdir /staticfiles
+RUN chown django /staticfiles
+RUN chmod 755 /staticfiles
+
 USER django
 
 WORKDIR /opt/app
 RUN export DATABASE_URL=$(make database_url)
+RUN yarn install
 
 ENTRYPOINT ["/entrypoint"]

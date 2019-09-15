@@ -5,6 +5,7 @@ set -o pipefail
 set -o nounset
 
 
+cd /opt/app/ && make css
 python /opt/app/manage.py collectstatic --noinput
 python /opt/app/manage.py migrate
-/usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:5000 --chdir=/opt/app
+/usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:8000 --chdir=/opt/app

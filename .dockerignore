@@ -3,6 +3,7 @@ compose
 !./compose/production/django/start
 !./compose/production/django/entrypoint
 !./compose/production/postgres/entrypoint
+!./compose/production/nginx/nginx.conf
 
 db.sqlite3
 node_modules

@@ -8,6 +8,11 @@ DJANGO_ALLOWED_HOSTS=.example.com
 DJANGO_SETTINGS_MODULE=config.settings.production
 PYTHONPATH=/opt/app
 
+DEBUG="false"
+
+#STATIC
+STATIC_ROOT=/staticfiles/
+
 # Gunicorn
 # ------------------------------------------------------------------------------
 WEB_CONCURRENCY=4
