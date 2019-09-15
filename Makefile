@@ -10,7 +10,6 @@ ADMIN = $(PYBIN)/django-admin
 PYTHON_PATH = $(BASEDIR)
 
 SETTINGS_DEV_SQLITE = "config.settings.dev_sqlite"
-SETTINGS_PRD = "config.settings.prd"
 
 .PHONY: all
 all:
@@ -26,14 +25,13 @@ migrate: $(PYTHON) $(ADMIN)
 
 .PHONY: collectstatic
 collectstatic: $(PYTHON) $(ADMIN)
-	echo ${DJANGO_SETTINGS_MODULE}
 	python manage.py collectstatic --settings ${DJANGO_SETTINGS_MODULE}
 
 $(PYTHON):
 	virtualenv .venv
 
 $(ADMIN): $(PYTHON)
-	$(PIP) install -r requirements.txt
+	$(PIP) install -r requirements/base.txt
 
 .PHONY: drun
 drun:
