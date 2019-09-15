@@ -24,6 +24,11 @@ run: $(PYTHON) $(ADMIN)
 migrate: $(PYTHON) $(ADMIN)
 	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
+.PHONY: collectstatic
+collectstatic: $(PYTHON) $(ADMIN)
+	echo ${DJANGO_SETTINGS_MODULE}
+	python manage.py collectstatic --settings ${DJANGO_SETTINGS_MODULE}
+
 $(PYTHON):
 	virtualenv .venv
 
@@ -43,9 +48,9 @@ prun:
 down:
 	for env in production dev
 	do
-		if docker ps --format "table {{.Image}}" | grep ${env}_django
+		if docker ps --format "table {{.Image}}" | grep $${env}_django
 		then
-			docker-compose -f compose/${env}.yml down
+			docker-compose -f compose/$${env}.yml down
 		fi
 	done
 
