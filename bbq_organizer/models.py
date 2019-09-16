@@ -3,12 +3,14 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
+from bbq_organizer.validators import validate_date
+
 
 SLUG_LENGTH = 8
 
 
 class Event(models.Model):
-    date = models.DateField()
+    date = models.DateField(validators=[validate_date])
     author = models.ForeignKey(User, null=False, on_delete="CASCADE")
     slug = models.SlugField(max_length=SLUG_LENGTH, unique=True, null=False, blank=True)
 
@@ -30,10 +32,14 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
         self.slug = self._generate_slug()
         super().save(*args, **kwargs)
+        return self.slug
 
 
 class MeatType(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class SignUp(models.Model):

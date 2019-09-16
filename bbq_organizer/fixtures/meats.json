@@ -1,0 +1,471 @@
+[
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 1,
+    "fields": {
+      "name": "Beef"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 2,
+    "fields": {
+      "name": "Chicken"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 3,
+    "fields": {
+      "name": "Pork"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 4,
+    "fields": {
+      "name": "Bacon"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 5,
+    "fields": {
+      "name": "Chuck"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 6,
+    "fields": {
+      "name": "Short loin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 7,
+    "fields": {
+      "name": "Sirloin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 8,
+    "fields": {
+      "name": "Shank"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 9,
+    "fields": {
+      "name": "Flank"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 10,
+    "fields": {
+      "name": "Sausage"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 11,
+    "fields": {
+      "name": "Pork belly"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 12,
+    "fields": {
+      "name": "Shoulder"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 13,
+    "fields": {
+      "name": "Cow"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 14,
+    "fields": {
+      "name": "Pig"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 15,
+    "fields": {
+      "name": "Ground round"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 16,
+    "fields": {
+      "name": "Hamburger"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 17,
+    "fields": {
+      "name": "Meatball"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 18,
+    "fields": {
+      "name": "Tenderloin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 19,
+    "fields": {
+      "name": "Strip steak"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 20,
+    "fields": {
+      "name": "T-bone"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 21,
+    "fields": {
+      "name": "Ribeye"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 22,
+    "fields": {
+      "name": "Shankle"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 23,
+    "fields": {
+      "name": "Tongue"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 24,
+    "fields": {
+      "name": "Tail"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 25,
+    "fields": {
+      "name": "Pork chop"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 26,
+    "fields": {
+      "name": "Pastrami"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 27,
+    "fields": {
+      "name": "Corned beef"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 28,
+    "fields": {
+      "name": "Jerky"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 29,
+    "fields": {
+      "name": "Ham"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 30,
+    "fields": {
+      "name": "Fatback"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 31,
+    "fields": {
+      "name": "Ham hock"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 32,
+    "fields": {
+      "name": "Pancetta"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 33,
+    "fields": {
+      "name": "Pork loin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 34,
+    "fields": {
+      "name": "Short ribs"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 35,
+    "fields": {
+      "name": "Spare ribs"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 36,
+    "fields": {
+      "name": "Beef ribs"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 37,
+    "fields": {
+      "name": "Drumstick"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 38,
+    "fields": {
+      "name": "Tri-tip"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 39,
+    "fields": {
+      "name": "Ball tip"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 40,
+    "fields": {
+      "name": "Venison"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 41,
+    "fields": {
+      "name": "Turkey"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 42,
+    "fields": {
+      "name": "Biltong"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 43,
+    "fields": {
+      "name": "Rump"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 44,
+    "fields": {
+      "name": "Jowl"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 45,
+    "fields": {
+      "name": "Salami"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 46,
+    "fields": {
+      "name": "Bresaola"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 47,
+    "fields": {
+      "name": "Meatloaf"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 48,
+    "fields": {
+      "name": "Brisket"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 49,
+    "fields": {
+      "name": "Boudin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 50,
+    "fields": {
+      "name": "Andouille"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 51,
+    "fields": {
+      "name": "Capicola"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 52,
+    "fields": {
+      "name": "Swine"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 53,
+    "fields": {
+      "name": "Kielbasa"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 54,
+    "fields": {
+      "name": "Frankfurter"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 55,
+    "fields": {
+      "name": "Prosciutto"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 56,
+    "fields": {
+      "name": "Filet mignon"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 57,
+    "fields": {
+      "name": "Leberkas"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 58,
+    "fields": {
+      "name": "Turducken"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 59,
+    "fields": {
+      "name": "Doner"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 60,
+    "fields": {
+      "name": "Kevin"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 61,
+    "fields": {
+      "name": "Landjaeger"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 62,
+    "fields": {
+      "name": "Porchetta"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 63,
+    "fields": {
+      "name": "Alcatra"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 64,
+    "fields": {
+      "name": "Picanha"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 65,
+    "fields": {
+      "name": "Cupim"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 66,
+    "fields": {
+      "name": "Burgdoggen"
+    }
+  },
+  {
+    "model": "bbq_organizer.MeatType",
+    "pk": 67,
+    "fields": {
+      "name": "Buffalo"
+    }
+  }
+]

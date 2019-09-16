@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "navbar.html" %}
+
+  <div class="home-menu">
+    {% for event in events %}
+      <a href="/events/admin/{{ event.slug }}" class="button is-primary is-large min-width-256">{{ event }}</a>
+    {% endfor %}
+  </div>
+{% endblock %}

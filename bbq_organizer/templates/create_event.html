@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "navbar.html" %}
+
+  <div class="home-menu">
+    <form action="/create_event/" method="post" class="create-event-form">
+      {% csrf_token %}
+
+        {% for field in form %}
+          <p>
+              <span class="has-text-weight-bold has-text-right">{{ field.label_tag }}</span>
+              {{ field }}
+          </p>
+          {% for error in field.errors %}
+            <p class="has-text-danger max-width-200 is-size-7">{{ error }}</p>
+          {% endfor %}
+        {% endfor %}
+      <div class="controls">
+        <a href="/" class="button is-light">Cancel</a>
+        <input class="button is-primary" type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+{% endblock %}
