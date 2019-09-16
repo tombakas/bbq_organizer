@@ -6,7 +6,6 @@ register.onclick = function addMeat() {
   var meats = document.getElementsByClassName("meat-option");
   var location = document.URL.split("/");
   var slug = location[location.length - 1];
-  console.log(slug);
 
   var chosen = [];
 
