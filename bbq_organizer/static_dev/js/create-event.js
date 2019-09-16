@@ -1,12 +1,24 @@
 var meats = {};
 var select = document.getElementById("meat-select");
 var chosen = document.getElementById("meats-chosen");
+var entries = document.getElementsByClassName("entry");
+
+
+for (var item of entries) {
+  var children = item.children;
+  var id = children[1].id.split("-")[1];
+  children[1].onclick = removeMeat;
+  meats[id] = {
+    selected: true,
+    name: children[0].innerHTML
+  };
+}
 
 function removeMeat(item) {
   var target = item.target;
   var id = target.id.split("-")[1];
 
-  meats[id] = false;
+  meats[id].selected = false;
   target.parentElement.remove();
 }
 
@@ -35,7 +47,7 @@ form.onsubmit = function(event) {
 document.getElementById("add-meat").onclick = function addMeat() {
   var meat = select[select.selectedIndex];
 
-  if (meats[meat.value] === undefined || meats[meat.value] === false) {
+  if (meats[meat.value] === undefined || meats[meat.value].selected === false) {
     var entry = document.createElement("div");
     var name = document.createElement("span");
     var button = document.createElement("div");
@@ -53,6 +65,9 @@ document.getElementById("add-meat").onclick = function addMeat() {
     entry.appendChild(button);
     chosen.appendChild(entry);
 
-    meats[meat.value] = true;
+    meats[meat.value] = {
+      selected: true,
+      name: meat.innerHTML
+    };
   }
 };

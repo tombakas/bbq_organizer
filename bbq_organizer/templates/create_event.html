@@ -32,6 +32,12 @@
           <div class="button is-primary" id="add-meat">+</div>
       </div>
       <div id="meats-chosen">
+        {% for key, value in meats_chosen.items %}
+          <div class="entry">
+            <span>{{ value.name }}</span>
+            <div class="button is-danger" id="meat-{{ key }}">-</div>
+          </div>
+        {% endfor %}
       </div>
       <div class="controls">
         <a href="/" class="button is-light">Cancel</a>

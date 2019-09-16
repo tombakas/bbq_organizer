@@ -46,7 +46,20 @@ def create_event(request):
     else:
         form = forms.EventForm()
 
-    return render(request, "create_event.html", {"form": form, "meats": meats})
+    meats_chosen = {}
+    meats_chosen_string = request.POST.get("meats")
+    if meats_chosen_string:
+        meats_chosen = json.loads(meats_chosen_string)
+
+    keys = list(meats_chosen.keys())
+    for key in keys:
+        if meats_chosen[key]["selected"] is False:
+            del meats_chosen[key]
+    return render(
+        request,
+        "create_event.html",
+        {"form": form, "meats": meats, "meats_chosen": meats_chosen},
+    )
 
 
 @login_required
@@ -90,7 +103,9 @@ def invite_event(request, slug):
         event = Event.objects.filter(slug=slug).first()
         if event:
             meats = MeatOption.objects.filter(event__pk=event.id)
-            return render(request, "invite_event.html", {"event": event, "meats": meats})
+            return render(
+                request, "invite_event.html", {"event": event, "meats": meats}
+            )
         else:
             return render(request, "does_not_exist.html")
     return render(request, "already_registered.html")
@@ -122,10 +137,6 @@ def register_event(request, slug):
             return HttpResponseBadRequest()
     else:
         return render(request, "already_registered.html")
-
-
-def thank_you(request):
-    return render(request, "thank_you.html")
 
 
 @login_required
