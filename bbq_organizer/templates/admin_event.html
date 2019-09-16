@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
   {% include "navbar.html" %}
 
@@ -9,9 +11,16 @@
         <span class="has-text-weight-bold">Event url:</span>
         <a href="/events/invite/{{ event.slug }}">{{ host }}/events/invite/{{ event.slug }}</a>
       </p>
+      {% if total %}
       <p>
         <span class="has-text-weight-bold">Total participants:</span><span> {{ total }}</span>
       </p>
+      {% else %}
+      <p>
+        <span class="has-text-weight-bold">No signups so far.</span>
+      </p>
+      {% endif %}
+      {% if signups %}
       <h3>Participants</h3>
       <table class="participant-count">
         <tr>
@@ -25,7 +34,9 @@
           </tr>
         {% endfor %}
       </table>
+      {% endif %}
 
+      {% if meats %}
       <h3>Meat count</h3>
       <table class="meat-count">
         <tr>
@@ -39,6 +50,18 @@
           </tr>
         {% endfor %}
       </table>
+      {% endif %}
+      <button class="button is-danger delete-event" id="delete-event">Delete event</button>
     </div>
   </div>
+  <div class="modal" id="confirm-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <p>Are you sure you want to delete the event?</p>
+      <button class="button is-light cancel-delete">Cancel</button>
+      <button data-slug="{{ event.slug }}" class="button is-danger confirm-delete">Delete event</button>
+    </div>
+    <button class="modal-close" aria-label="close"></button>
+  </div>
+  <script src="{% static "js/admin_event.js" %}"></script>
 {% endblock %}

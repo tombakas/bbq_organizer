@@ -112,6 +112,7 @@ def invite_event(request, slug):
 
 
 @csrf_exempt
+@login_required
 def register_event(request, slug):
     if request.method == "POST":
         value = request.COOKIES.get("registered")
@@ -158,6 +159,20 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, "signup.html", {"form": form})
+
+
+@login_required
+@csrf_exempt
+def delete_event(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data["slug"])
+        try:
+            Event.objects.get(slug=data["slug"]).delete()
+        except Event.DoesNotExist:
+            pass
+
+        return HttpResponse("")
 
 
 def view_404(request, exception):

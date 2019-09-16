@@ -6,6 +6,12 @@ register.onclick = function addMeat() {
   var meats = document.getElementsByClassName("meat-option");
   var location = document.URL.split("/");
   var slug = location[location.length - 1];
+  var nameEror = document.getElementById("no-name-error");
+
+  if (name.value === "") {
+    nameEror.classList.remove("is-hidden");
+    return;
+  }
 
   var chosen = [];
 

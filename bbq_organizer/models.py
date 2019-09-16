@@ -11,7 +11,7 @@ SLUG_LENGTH = 8
 
 class Event(models.Model):
     date = models.DateField(validators=[validate_date])
-    author = models.ForeignKey(User, null=False, on_delete="CASCADE")
+    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=SLUG_LENGTH, unique=True, null=False, blank=True)
 
     def __str__(self):
@@ -44,7 +44,7 @@ class MeatType(models.Model):
 
 class SignUp(models.Model):
     name = models.CharField(max_length=64, blank=True)
-    event = models.ForeignKey(Event, null=False, on_delete="CASCADE")
+    event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
     extras = models.PositiveSmallIntegerField()
 
     def save(self, *args, **kwargs):
@@ -53,10 +53,10 @@ class SignUp(models.Model):
 
 
 class MeatOption(models.Model):
-    event = models.ForeignKey(Event, null=False, on_delete="CASCADE")
-    meat = models.ForeignKey(MeatType, null=False, on_delete="CASCADE")
+    event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
+    meat = models.ForeignKey(MeatType, null=False, on_delete=models.CASCADE)
 
 
 class MeatChoice(models.Model):
-    signup = models.ForeignKey(SignUp, null=False, on_delete="CASCADE")
-    meat = models.ForeignKey(MeatType, null=False, on_delete="CASCADE")
+    signup = models.ForeignKey(SignUp, null=False, on_delete=models.CASCADE)
+    meat = models.ForeignKey(MeatType, null=False, on_delete=models.CASCADE)

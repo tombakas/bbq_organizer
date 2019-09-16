@@ -59,7 +59,14 @@ nav.bbq-navbar {
   }
 
   .participant-count, .meat-count {
-    max-width: 600px;
+    max-width: 500px;
+    margin-top: 50px;
+    td {
+      width: 250px;
+    }
+  }
+
+  .delete-event {
     margin-top: 50px;
   }
 }
@@ -94,5 +101,17 @@ nav.bbq-navbar {
         width: 36px;
       }
     }
+  }
+}
+
+.modal-content {
+  background-color: white;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+
+  p {
+    padding-bottom: 20px;
   }
 }
