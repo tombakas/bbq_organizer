@@ -1,5 +1,7 @@
 import json
 
+from collections import defaultdict
+
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
@@ -51,15 +53,37 @@ def create_event(request):
 def admin_event(request, slug):
     event = Event.objects.get(slug=slug)
     host = request.get_host().split("/")[0]
+
+    signups = SignUp.objects.filter(event__pk=event.id)
+    meatchoices = []
+
+    total = 0
+    for signup in signups:
+        meatchoices.extend(MeatChoice.objects.filter(signup__pk=signup.id))
+        total += signup.extras + 1
+
+    meat_count = defaultdict(int)
+    for meatchoice in meatchoices:
+        meat_count[meatchoice.meat.name] += 1
+
     if event:
-        return render(request, "admin_event.html", {"event": event, "host": host})
+        return render(
+            request,
+            "admin_event.html",
+            {
+                "event": event,
+                "host": host,
+                "meats": dict(meat_count),
+                "signups": signups,
+                "total": total,
+            },
+        )
     else:
         return redirect("/")
 
 
 def invite_event(request, slug):
     value = request.COOKIES.get("registered")
-    print(value)
     if value != slug:
         event = Event.objects.get(slug=slug)
         meats = MeatOption.objects.filter(event__pk=event.id)
@@ -74,8 +98,9 @@ def register_event(request, slug):
         if value != slug:
             data = json.loads(request.body)
             extras = data["extras"]
+            name = data["name"]
             event = Event.objects.get(slug=slug)
-            signup = SignUp(event=event, extras=extras)
+            signup = SignUp(event=event, extras=extras, name=name)
             signup = signup.save()
 
             for meat in data["meats"]:

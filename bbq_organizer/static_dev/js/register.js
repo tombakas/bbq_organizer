@@ -1,8 +1,9 @@
 var register = document.getElementById("register");
 
 register.onclick = function addMeat() {
-  extras = document.getElementById("extras");
-  meats = document.getElementsByClassName("meat-option");
+  var extras = document.getElementById("extras");
+  var name = document.getElementById("name");
+  var meats = document.getElementsByClassName("meat-option");
   var location = document.URL.split("/");
   var slug = location[location.length - 1];
   console.log(slug);
@@ -17,7 +18,8 @@ register.onclick = function addMeat() {
 
   var body = {
     meats: chosen,
-    extras: extras.value
+    extras: extras.value,
+    name: name.value
   };
 
   fetch(`/events/invite/register/${slug}`, {

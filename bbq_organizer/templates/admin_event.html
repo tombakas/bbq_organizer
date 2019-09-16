@@ -3,10 +3,42 @@
 {% block content %}
   {% include "navbar.html" %}
 
-  <div class="event-admin-info">
-    <p>
-      <span class="has-text-weight-bold">Event url:</span>
-      <a href="/events/invite/{{ event.slug }}">{{ host }}/events/invite/{{ event.slug }}</a>
-    </p>
+  <div class="content">
+    <div class="event-admin-info">
+      <p>
+        <span class="has-text-weight-bold">Event url:</span>
+        <a href="/events/invite/{{ event.slug }}">{{ host }}/events/invite/{{ event.slug }}</a>
+      </p>
+      <p>
+        <span class="has-text-weight-bold">Total participants:</span><span> {{ total }}</span>
+      </p>
+      <h3>Participants</h3>
+      <table class="participant-count">
+        <tr>
+          <th>Name</th>
+          <th>Extras</th>
+        </tr>
+        {% for signup in signups %}
+          <tr>
+            <td>{{ signup.name }}</td>
+            <td>{{ signup.extras }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <h3>Meat count</h3>
+      <table class="meat-count">
+        <tr>
+          <th>Type</th>
+          <th>Count</th>
+        </tr>
+        {% for key, value in meats.items %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 {% endblock %}

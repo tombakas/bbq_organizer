@@ -53,6 +53,15 @@ nav.bbq-navbar {
     margin-left: -70px;
     padding: 20px 0;
   }
+
+  #name {
+    width: 200px;
+  }
+
+  .participant-count, .meat-count {
+    max-width: 600px;
+    margin-top: 50px;
+  }
 }
 
 .create-event-form {

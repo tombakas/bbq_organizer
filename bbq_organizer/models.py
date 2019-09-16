@@ -43,6 +43,7 @@ class MeatType(models.Model):
 
 
 class SignUp(models.Model):
+    name = models.CharField(max_length=64, blank=True)
     event = models.ForeignKey(Event, null=False, on_delete="CASCADE")
     extras = models.PositiveSmallIntegerField()
 
