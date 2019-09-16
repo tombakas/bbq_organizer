@@ -15,17 +15,10 @@ The _production_ setup maps to port **8123** by default. The password validator
 is very picky in _production_, which can be circumvented for testing by setting
 `AUTH_PASSWORD_VALIDATORS=[]` in `config/settings/production.py`.
  
-### Bugs
-
-The way the event creation was handled turned out to be wonky, as the meat
-choices are handled separately from the form, thus if the user inputs a wrong
-date, the meats need to be rechosen. This architecture remained due to having
-commited to it too much and having strayed too far from the light.
-
 ### Where are the tests?
 
-They should be released with the rollout of the next version. Crunch time made
-tests improbable.
+They should be released with the rollout of the next version. Crunch time
+resulted in tests becoming second priority after features.
 
 ### Makefile commands:
 * **run**: Run local server using sqlite
