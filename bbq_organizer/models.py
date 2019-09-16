@@ -32,7 +32,7 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
         self.slug = self._generate_slug()
         super().save(*args, **kwargs)
-        return self.slug
+        return self
 
 
 class MeatType(models.Model):
@@ -45,6 +45,10 @@ class MeatType(models.Model):
 class SignUp(models.Model):
     event = models.ForeignKey(Event, null=False, on_delete="CASCADE")
     extras = models.PositiveSmallIntegerField()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        return self
 
 
 class MeatOption(models.Model):

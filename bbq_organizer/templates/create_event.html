@@ -1,25 +1,43 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
   {% include "navbar.html" %}
 
   <div class="home-menu">
-    <form action="/create_event/" method="post" class="create-event-form">
+    <form action="/create_event/" method="post" id="create-event-form" class="create-event-form">
       {% csrf_token %}
 
-        {% for field in form %}
-          <p>
-              <span class="has-text-weight-bold has-text-right">{{ field.label_tag }}</span>
-              {{ field }}
-          </p>
-          {% for error in field.errors %}
-            <p class="has-text-danger max-width-200 is-size-7">{{ error }}</p>
-          {% endfor %}
+      {% for field in form %}
+        <p>
+          <span class="has-text-weight-bold has-text-right">{{ field.label_tag }}</span>
+          {{ field }}
+        </p>
+        {% for error in field.errors %}
+          <p class="has-text-danger max-width-200 is-size-7">{{ error }}</p>
         {% endfor %}
+      {% endfor %}
+
+      <p class="meats-heading">
+        <span class="has-text-weight-bold has-text-right">Meats:</span>
+      </p>
+      <div class="control">
+        <div class="select">
+          <select id="meat-select">
+            {% for meat in meats %}
+              <option value="{{ meat.pk }}">{{ meat }}</option>
+            {% endfor %}          
+          </select>
+        </div>
+          <div class="button is-primary" id="add-meat">+</div>
+      </div>
+      <div id="meats-chosen">
+      </div>
       <div class="controls">
         <a href="/" class="button is-light">Cancel</a>
         <input class="button is-primary" type="submit" value="Submit">
       </div>
     </form>
   </div>
+  <script src="{% static "js/create_event.js" %}"></script>
 {% endblock %}

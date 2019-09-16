@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="content">
+    <div class="event-admin-info">
+      <h3>Signup for barbeque event</h3>
+      <p>
+        <span class="has-text-weight-bold">Number of additional guests participating:</span>
+        <input id="extras" type="number" value="0" min="0">
+      </p>
+        <span class="has-text-weight-bold">Pick your meats:</span><br>
+        <div class="meat-list">
+          <div class="item">
+            {% for meat in meats %}
+              <div>
+              <input class="meat-option" type="checkbox" value="{{ meat.meat.id }}"><span>{{ meat.meat }}</span>
+              </div>
+            {% endfor%}
+          </div>
+        </div>
+      <div id="register" class="button is-primary">Submit</div>
+    </div>
+  </div>
+  <script src="{% static "js/register.js" %}"></script>
+{% endblock %}

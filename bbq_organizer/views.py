@@ -1,10 +1,20 @@
+import json
+
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
+from django.views.decorators.csrf import csrf_exempt
+
 from bbq_organizer.models import Event
+from bbq_organizer.models import MeatType
+from bbq_organizer.models import MeatOption
+from bbq_organizer.models import MeatChoice
+from bbq_organizer.models import SignUp
+
 from bbq_organizer import forms
 
 
@@ -15,32 +25,80 @@ def home(request):
 
 @login_required
 def create_event(request):
-    if request.method == 'POST':
+    meats = MeatType.objects.all().order_by("name")
+
+    if request.method == "POST":
         form = forms.EventForm(request.POST)
         if form.is_valid():
             intermediate_form = form.save(commit=False)
             intermediate_form.author = request.user
-            slug = intermediate_form.save()
+            event = intermediate_form.save()
+            slug = event.slug
+
+            meats = json.loads(request.POST["meats"])
+            for key, value in meats.items():
+                if value:
+                    option = MeatOption(event=event, meat_id=key)
+                    option.save()
             return redirect(f"/events/admin/{slug}")
     else:
         form = forms.EventForm()
 
-    return render(request, "create_event.html", {"form": form})
+    return render(request, "create_event.html", {"form": form, "meats": meats})
 
 
 @login_required
 def admin_event(request, slug):
-    event = Event.objects.filter(slug=slug)
+    event = Event.objects.get(slug=slug)
+    host = request.get_host().split("/")[0]
     if event:
-        return render(request, "admin_event.html")
+        return render(request, "admin_event.html", {"event": event, "host": host})
     else:
         return redirect("/")
+
+
+def invite_event(request, slug):
+    value = request.COOKIES.get("registered")
+    print(value)
+    if value != slug:
+        event = Event.objects.get(slug=slug)
+        meats = MeatOption.objects.filter(event__pk=event.id)
+        return render(request, "invite_event.html", {"event": event, "meats": meats})
+    return render(request, "already_registered.html")
+
+
+@csrf_exempt
+def register_event(request, slug):
+    if request.method == "POST":
+        value = request.COOKIES.get("registered")
+        if value != slug:
+            data = json.loads(request.body)
+            extras = data["extras"]
+            event = Event.objects.get(slug=slug)
+            signup = SignUp(event=event, extras=extras)
+            signup = signup.save()
+
+            for meat in data["meats"]:
+                meat_id = int(meat)
+                meat_choice = MeatChoice(signup=signup, meat_id=meat_id)
+                meat_choice.save()
+
+            response = HttpResponse("")
+            response.set_cookie("registered", slug)
+            return response
+        else:
+            return render(request, "already_registered.html")
+
+    return HttpResponseBadRequest("")
+
+
+def thank_you(request):
+    return render(request, "thank_you.html")
 
 
 @login_required
 def events_list(request):
     events = Event.objects.filter(author__pk=request.user.id)
-    print(events)
     return render(request, "events_list.html", {"events": events})
 
 

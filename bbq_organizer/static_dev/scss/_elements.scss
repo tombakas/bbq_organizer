@@ -14,10 +14,9 @@ nav.bbq-navbar {
   }
 }
 
-.home-menu {
+%menu-shared {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -26,7 +25,34 @@ nav.bbq-navbar {
     min-width: 256px;
     margin: 10px 0;
   }
+}
 
+.home-menu {
+  @extend %menu-shared;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-menu {
+  @extend %menu-shared;
+  padding-top: 50px;
+}
+
+.event-admin-info {
+  @extend %menu-shared;
+  padding-top: 50px;
+  p {
+    padding-top: 40px;
+  }
+  input {
+    height: 20px;
+    width: 60px;
+    text-align: center;
+  }
+  .meat-list {
+    margin-left: -70px;
+    padding: 20px 0;
+  }
 }
 
 .create-event-form {
@@ -36,5 +62,28 @@ nav.bbq-navbar {
 
   .controls {
     padding-top: 20px;
+  }
+
+  .meats-heading {
+    padding-top: 10px;
+  }
+  .meats {
+    padding: 10px 0;
+  }
+
+  #meats-chosen {
+    .entry {
+      width: 100%;
+      padding-top: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        padding-left: 15px;
+      }
+      .button {
+        width: 36px;
+      }
+    }
   }
 }
