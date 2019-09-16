@@ -1,13 +1,14 @@
 ### Brief decsription
 
-This project is based on the structure provided by the cookicutter django set
-up. The root `urls.py` and project settings are contained in the `config`
-directory. As this is only a test project, all the environment variables,
-including secrets, have been commited to vs.
+This project is based on the structure provided by the cookicutter django set up. The root `urls.py` and project settings are contained in the `config` directory. As this is only a test project, all the environment variables, including secrets, have been commited to vs. The static assets are compiled using webpack. There are three setups: two for development and one for production (fauxduction). 
 
-Requirements to get the project running: `docker`, `docker-compose` and `make`
+* The simplest setup just uses sqlite and a local django development server, it can be launched by running `make run` and then in parallel running `make watch` to compile static assets.
+* Then there is a dockerized setup that still mounts the local directory and thus expects for the static files to be compiled locally. It can be run with `make drun`
+* Finally, the faux-production setup partly immitates what a production environment looks like and copies over all the assets and compiles them autonomously. It can be run with `make prun`.
 
-Fingers crossed, this is all that is needed to test it:
+**Requirements** to get the project running: `docker`, `docker-compose` and `make`
+
+Fingers crossed, this is all that is needed to run it:
     `make prun`
  
 ### Bugs
