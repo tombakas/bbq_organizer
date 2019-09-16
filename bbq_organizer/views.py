@@ -54,7 +54,7 @@ def admin_event(request, slug):
     event = Event.objects.filter(slug=slug).first()
     if event is None:
         return redirect("/")
-    host = request.get_host().split("/")[0]
+    host = request.get_host()
 
     signups = SignUp.objects.filter(event__pk=event.id)
     meatchoices = []
