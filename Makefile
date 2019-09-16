@@ -61,7 +61,7 @@ build:
 	yarn build
 
 .PHONY: watch
-css_watch:
+watch:
 	yarn watch
 
 .PHONY: database_url
