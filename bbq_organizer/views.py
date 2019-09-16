@@ -147,3 +147,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, "signup.html", {"form": form})
+
+
+def view_404(request, exception):
+    return redirect("/")

@@ -18,6 +18,8 @@ services:
       - ../.envs/.production/.django
       - ../.envs/.production/.postgres
     command: /start
+    container_name: bbq_production_django
+    hostname: django
 
   postgres:
     build:
@@ -28,11 +30,14 @@ services:
       - production_postgres_data:/var/lib/postgresql/data
     env_file:
       - ../.envs/.production/.postgres
+    container_name: bbq_production_postgres
+    hostname: postgres
 
   nginx:
     build:
       context: ..
       dockerfile: ./compose/production/nginx/Dockerfile
+    image: bbq_organizer_production_nginx
     ports:
       - 8123:80
     depends_on:
@@ -40,4 +45,5 @@ services:
     volumes:
       - static_volume:/staticfiles
     command: [nginx-debug, '-g', 'daemon off;']
- 
+    container_name: bbq_production_nginx
+    hostname: nginx

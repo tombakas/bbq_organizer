@@ -8,7 +8,7 @@ DJANGO_ALLOWED_HOSTS=.example.com
 DJANGO_SETTINGS_MODULE=config.settings.production
 PYTHONPATH=/opt/app
 
-DEBUG="false"
+DEBUG=False
 
 #STATIC
 STATIC_ROOT=/staticfiles/

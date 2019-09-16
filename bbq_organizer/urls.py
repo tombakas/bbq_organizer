@@ -14,5 +14,5 @@ urlpatterns = [
     path("events/list", views.events_list, name="events_list"),
     path("thank_you", views.thank_you, name="thank_you"),
     path("does_not_exist", TemplateView.as_view(template_name="does_not_exist.html")),
-    path("already_registered", TemplateView.as_view(template_name="already_registered.html"))
+    path("already_registered", TemplateView.as_view(template_name="already_registered.html")),
 ]

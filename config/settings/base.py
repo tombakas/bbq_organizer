@@ -18,7 +18,9 @@ from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(os.path.abspath(__file__)).parents[2]
-env = environ.Env()
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = "/"
