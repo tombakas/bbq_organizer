@@ -2,7 +2,7 @@ import json
 
 from collections import defaultdict
 
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
@@ -51,7 +51,9 @@ def create_event(request):
 
 @login_required
 def admin_event(request, slug):
-    event = Event.objects.get(slug=slug)
+    event = Event.objects.filter(slug=slug).first()
+    if event is None:
+        return redirect("/")
     host = request.get_host().split("/")[0]
 
     signups = SignUp.objects.filter(event__pk=event.id)
@@ -102,7 +104,9 @@ def register_event(request, slug):
             data = json.loads(request.body)
             extras = data["extras"]
             name = data["name"]
-            event = Event.objects.get(slug=slug)
+            event = Event.objects.filter(slug=slug).first()
+            if event is None:
+                return HttpResponseNotFound()
             signup = SignUp(event=event, extras=extras, name=name)
             signup = signup.save()
 
@@ -111,13 +115,13 @@ def register_event(request, slug):
                 meat_choice = MeatChoice(signup=signup, meat_id=meat_id)
                 meat_choice.save()
 
-            response = HttpResponse("")
+            response = HttpResponse()
             response.set_cookie("registered", slug)
             return response
         else:
-            return render(request, "already_registered.html")
-
-    return HttpResponseBadRequest("")
+            return HttpResponseBadRequest()
+    else:
+        return render(request, "already_registered.html")
 
 
 def thank_you(request):

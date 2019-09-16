@@ -29,6 +29,14 @@ register.onclick = function addMeat() {
       'Content-Type': 'application/json'
     }
   }).then()
-    .then(response => window.location= "/thank_you")
+    .then((resp) => {
+      if (resp.status == 200) {
+        window.location = "/thank_you";
+      } else if (resp.status == 404){
+        window.location = "/does_not_exist";
+      } else if (resp.status == 400) {
+        window.location = "/already_registered";
+      }
+    })
     .catch(error => console.log(error));
 };
