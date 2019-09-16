@@ -10,6 +10,8 @@ This project is based on the structure provided by the cookicutter django set up
 
 Fingers crossed, this is all that is needed to run it:
     `make prun`
+
+The project maps to port *8123* by default.
  
 ### Bugs
 
