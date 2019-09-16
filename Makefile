@@ -64,6 +64,10 @@ build:
 watch:
 	yarn watch
 
+.PHONY: dev_watch
+dev_watch:
+	yarn dev-watch
+
 .PHONY: database_url
 database_url:
 	@ echo "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
