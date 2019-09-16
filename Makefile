@@ -23,6 +23,10 @@ run: $(PYTHON) $(ADMIN)
 migrate: $(PYTHON) $(ADMIN)
 	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
+.PHONY: makemigrations
+makemigrations: $(PYTHON) $(ADMIN)
+	$(ADMIN) makemigrations --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE) bbq_organizer
+
 .PHONY: collectstatic
 collectstatic: $(PYTHON) $(ADMIN)
 	python manage.py collectstatic --settings ${DJANGO_SETTINGS_MODULE}
@@ -44,21 +48,21 @@ prun:
 .ONESHELL:
 .PHONY: down
 down:
-	for env in production dev
-	do
-		if docker ps --format "table {{.Image}}" | grep $${env}_django
-		then
-			docker-compose -f compose/$${env}.yml down
-		fi
-	done
+	@ for env in production dev
+	@ do
+	@ 	if docker ps --format "table {{.Image}}" | grep $${env}_django
+	@ 	then
+	@ 		docker-compose -f compose/$${env}.yml down
+	@ 	fi
+	@ done
 
-.PHONY: css
-css:
-	yarn css-build
+.PHONY: build
+build:
+	yarn build
 
-.PHONY: css_watch
+.PHONY: watch
 css_watch:
-	yarn css-watch
+	yarn watch
 
 .PHONY: database_url
 database_url:
