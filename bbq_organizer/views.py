@@ -85,9 +85,12 @@ def admin_event(request, slug):
 def invite_event(request, slug):
     value = request.COOKIES.get("registered")
     if value != slug:
-        event = Event.objects.get(slug=slug)
-        meats = MeatOption.objects.filter(event__pk=event.id)
-        return render(request, "invite_event.html", {"event": event, "meats": meats})
+        event = Event.objects.filter(slug=slug).first()
+        if event:
+            meats = MeatOption.objects.filter(event__pk=event.id)
+            return render(request, "invite_event.html", {"event": event, "meats": meats})
+        else:
+            return render(request, "does_not_exist.html")
     return render(request, "already_registered.html")
 
 
