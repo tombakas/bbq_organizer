@@ -17,3 +17,7 @@ node_modules
 
 # css
 *\.css
+
+# js
+**/static
+.cache
