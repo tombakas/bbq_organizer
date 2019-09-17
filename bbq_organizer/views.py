@@ -2,7 +2,12 @@ import json
 
 from collections import defaultdict
 
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseNotFound
+)
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
@@ -123,6 +128,10 @@ def register_event(request, slug):
             event = Event.objects.filter(slug=slug).first()
             if event is None:
                 return HttpResponseNotFound()
+            try:
+                extras = int(extras)
+            except ValueError:
+                return HttpResponseBadRequest()
             signup = SignUp(event=event, extras=extras, name=name)
             signup = signup.save()
 
@@ -135,7 +144,7 @@ def register_event(request, slug):
             response.set_cookie("registered", slug)
             return response
         else:
-            return HttpResponseBadRequest()
+            return HttpResponseForbidden()
     else:
         return render(request, "already_registered.html")
 

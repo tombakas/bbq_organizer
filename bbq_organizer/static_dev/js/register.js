@@ -7,6 +7,10 @@ register.onclick = function addMeat() {
   var location = document.URL.split("/");
   var slug = location[location.length - 1];
   var nameEror = document.getElementById("no-name-error");
+  var numberError = document.getElementById("invalid-number-error");
+
+  nameEror.classList.add("is-hidden");
+  numberError.classList.add("is-hidden");
 
   if (name.value === "") {
     nameEror.classList.remove("is-hidden");
@@ -39,8 +43,10 @@ register.onclick = function addMeat() {
         window.location = "/thank_you";
       } else if (resp.status == 404){
         window.location = "/does_not_exist";
-      } else if (resp.status == 400) {
+      } else if (resp.status == 403) {
         window.location = "/already_registered";
+      } else if (resp.status == 400) {
+        numberError.classList.remove("is-hidden");
       }
     })
     .catch(error => console.log(error));
