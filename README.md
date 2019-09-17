@@ -1,6 +1,6 @@
 ### Brief description
 
-This project is based on the structure provided by the cookicutter django set up. The root `urls.py` and project settings are contained in the `config` directory. As this is only a test project, all the environment variables, including secrets, have been commited to vc. The static assets are compiled using webpack. There are three setups: two for development and one for production (faux-duction). 
+This project is based on the structure provided by the cookicutter django set up. The root `urls.py` and project settings are contained in the `config` directory. As this is only a test project, all the environment variables, including secrets, have been commited to vc. The static assets are compiled using webpack. There are three setups: two for development and one for production (faux-duction). For running **development**, the dependencies in **package.json** need to be installed locally by running either `npm install` or `yarn install`. This makes the `make build`, `make dev_build`, `make watch` and `make dev_watch` commands available.
 
 * The simplest setup just uses sqlite and a local django development server, it can be launched by running `make run` and then in parallel running `make watch` to compile static assets.
 * Then there is a dockerized setup that still mounts the local directory and thus expects for the static files to be compiled locally. It can be run with `make drun`
@@ -14,6 +14,16 @@ Fingers crossed, this is all that is needed to run it:
 The _production_ setup maps to port **8123** by default. The password validator
 is very picky in _production_, which can be circumvented for testing by setting
 `AUTH_PASSWORD_VALIDATORS=[]` in `config/settings/production.py`.
+
+### Dev maintenance
+
+Tu be run on first deployment and when needed:
+
+* Applying database migrations: `make migrate`
+* Populating database with data fixtures: `make data`
+* Compiling css and js: `make build`
+* Compiling css and js continuously: `make watch`
+
  
 ### Where are the tests?
 
