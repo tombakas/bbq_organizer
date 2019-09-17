@@ -26,6 +26,8 @@ resulted in tests becoming second priority after features.
 * **prun**: Run dockerized server using postgres, gunicorn and nginx
     (production run)
 * **migrate**: Run local sqlite migrations
+* **data**: Populate db with data fixtures
+* **superuser**: Create superuser
 * **down**: Spin down containers
 * **build**: Compile scss and js
 * **watch**: Continuously build scss and js

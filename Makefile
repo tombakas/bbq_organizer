@@ -23,6 +23,14 @@ run: $(PYTHON) $(ADMIN)
 migrate: $(PYTHON) $(ADMIN)
 	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
+.PHONY: data
+data: $(PYTHON) $(ADMIN)
+	$(ADMIN) loaddata --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE) meats.json
+
+.PHONY: superuser
+superuser: $(PYTHON) $(ADMIN)
+	$(ADMIN) createsuperuser --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
+
 .PHONY: makemigrations
 makemigrations: $(PYTHON) $(ADMIN)
 	$(ADMIN) makemigrations --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE) bbq_organizer
