@@ -40,7 +40,7 @@ collectstatic: $(PYTHON) $(ADMIN)
 	python manage.py collectstatic --settings ${DJANGO_SETTINGS_MODULE}
 
 $(PYTHON):
-	virtualenv .venv
+	virtualenv -p $$(which python3) .venv
 
 $(ADMIN): $(PYTHON)
 	$(PIP) install -r requirements/base.txt
