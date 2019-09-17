@@ -166,7 +166,6 @@ def signup(request):
 def delete_event(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data["slug"])
         try:
             Event.objects.get(slug=data["slug"]).delete()
         except Event.DoesNotExist:
