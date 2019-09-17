@@ -42,7 +42,7 @@ def create_event(request):
                 if value:
                     option = MeatOption(event=event, meat_id=key)
                     option.save()
-            return redirect(f"/events/admin/{slug}")
+            return redirect("/events/admin/{}".format(slug))
     else:
         form = forms.EventForm()
 
@@ -153,7 +153,7 @@ def signup(request):
             form.save()
             username = form.cleaned_data["username"]
             messages.add_message(
-                request, messages.INFO, f"{username} signed up successfully"
+                request, messages.INFO, "{} signed up successfully".format(username)
             )
             return redirect("login")
     else:
