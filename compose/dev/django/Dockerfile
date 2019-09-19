@@ -7,7 +7,9 @@ RUN apk update \
   && apk add --virtual build-deps gcc python3-dev musl-dev \
   && apk add postgresql-dev \
   # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
-  && apk add postgresql-client
+  && apk add postgresql-client \
+  # dev dependencies
+  && apk add make
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /opt/app/requirements

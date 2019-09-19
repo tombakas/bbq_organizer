@@ -9,6 +9,7 @@ services:
       context: ..
       dockerfile: ./compose/dev/django/Dockerfile
     image: bbq_organizer_dev_django
+    container_name: bbq_organizer_dev_django
     depends_on:
       - postgres
     volumes:
@@ -24,7 +25,8 @@ services:
     build:
       context: ..
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: bbq_organizer_production_postgres
+    image: bbq_production_postgres
+    container_name: bbq_organizer_dev_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
     env_file:

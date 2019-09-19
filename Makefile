@@ -11,24 +11,56 @@ PYTHON_PATH = $(BASEDIR)
 
 SETTINGS_DEV_SQLITE = "config.settings.dev_sqlite"
 
+DJANGO_CONTAINER = \
+	$(shell awk '/^  [a-z]/{django=0}/django:/{django=1}/container_name/{if(django){print $$2}}' compose/dev.yml)
+
 .PHONY: all
 all:
+	echo $(DJANGO_CONTAINER)
 	@echo "OK"
 
 .PHONY: run
 run: $(PYTHON) $(ADMIN)
 	$(ADMIN) runserver --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
+.ONESHELL:
 .PHONY: migrate
-migrate: $(PYTHON) $(ADMIN)
+migrate:
+	@ if docker ps --format "table {{.Image}}" | grep $(DJANGO_CONTAINER)
+	@ then
+		docker exec $(DJANGO_CONTAINER) sh -c 'export DATABASE_URL=$$(make database_url); django-admin migrate'
+	@ else
+		$(MAKE) _lmigrate
+	@ fi
+
+.PHONY: _lmigrate
+_lmigrate: $(PYTHON) $(ADMIN)
 	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
 .PHONY: data
-data: $(PYTHON) $(ADMIN)
+data:
+	@ if docker ps --format "table {{.Image}}" | grep $(DJANGO_CONTAINER)
+	@ then
+		docker exec $(DJANGO_CONTAINER) sh -c 'export DATABASE_URL=$$(make database_url); django-admin loaddata meats.json'
+	@ else
+		$(MAKE) _ldata
+	@ fi
+
+.PHONY: _ldata
+_ldata: $(PYTHON) $(ADMIN)
 	$(ADMIN) loaddata --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE) meats.json
 
 .PHONY: superuser
-superuser: $(PYTHON) $(ADMIN)
+superuser:
+	@ if docker ps --format "table {{.Image}}" | grep $(DJANGO_CONTAINER)
+	@ then
+		docker exec -it $(DJANGO_CONTAINER) sh -c 'export DATABASE_URL=$$(make database_url); django-admin createsuperuser'
+	@ else
+		$(MAKE) _lsuperuser
+	@ fi
+
+.PHONY: _lsuperuser
+_lsuperuser: $(PYTHON) $(ADMIN)
 	$(ADMIN) createsuperuser --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
 
 .PHONY: makemigrations
