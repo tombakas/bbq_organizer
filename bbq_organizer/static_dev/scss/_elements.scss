@@ -71,39 +71,6 @@ nav.bbq-navbar {
   }
 }
 
-.create-event-form {
-  &>p input {
-    height: 15px;
-  }
-
-  .controls {
-    padding-top: 20px;
-  }
-
-  .meats-heading {
-    padding-top: 10px;
-  }
-  .meats {
-    padding: 10px 0;
-  }
-
-  #meats-chosen {
-    .entry {
-      width: 100%;
-      padding-top: 3px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      span {
-        padding-left: 15px;
-      }
-      .button {
-        width: 36px;
-      }
-    }
-  }
-}
-
 .modal-content {
   background-color: white;
   max-width: 400px;

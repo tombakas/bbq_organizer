@@ -4,7 +4,7 @@
 {% block content %}
   {% include "navbar.html" %}
 
-  <div class="home-menu">
+  <div class="form-container">
     <form action="/create_event/" method="post" id="create-event-form" class="create-event-form">
       {% csrf_token %}
 
@@ -21,7 +21,7 @@
       <p class="meats-heading">
         <span class="has-text-weight-bold has-text-right">Meats:</span>
       </p>
-      <div class="control">
+      <div class="meat-select-control">
         <div class="select">
           <select id="meat-select">
             {% for meat in meats %}
@@ -39,7 +39,7 @@
           </div>
         {% endfor %}
       </div>
-      <div class="controls">
+      <div class="form-buttons">
         <a href="/" class="button is-light">Cancel</a>
         <input class="button is-primary" type="submit" value="Submit">
       </div>

@@ -1,6 +1,9 @@
+import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js';
+import '../scss/create_event.scss';
+
 var meats = {};
-var select = document.getElementById("meat-select");
-var chosen = document.getElementById("meats-chosen");
+var choice = document.getElementById("meat-select");
+var meatsChosen = document.getElementById("meats-chosen");
 var entries = document.getElementsByClassName("entry");
 
 
@@ -45,7 +48,7 @@ form.onsubmit = function(event) {
 };
 
 document.getElementById("add-meat").onclick = function addMeat() {
-  var meat = select[select.selectedIndex];
+  var meat = choice[choice.selectedIndex];
 
   if (meats[meat.value] === undefined || meats[meat.value].selected === false) {
     var entry = document.createElement("div");
@@ -63,7 +66,7 @@ document.getElementById("add-meat").onclick = function addMeat() {
 
     entry.appendChild(name);
     entry.appendChild(button);
-    chosen.appendChild(entry);
+    meatsChosen.appendChild(entry);
 
     meats[meat.value] = {
       selected: true,
@@ -71,3 +74,12 @@ document.getElementById("add-meat").onclick = function addMeat() {
     };
   }
 };
+
+// Set up bulma calendar
+var options = {
+  type: "date",
+  dateFormat: "YYYY-MM-DD",
+  displayMode: "default"
+};
+
+bulmaCalendar.attach('[type="date"]', options);
