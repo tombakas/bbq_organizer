@@ -5,8 +5,23 @@ var meats = {};
 var choice = document.getElementById("meat-select");
 var meatsChosen = document.getElementById("meats-chosen");
 var entries = document.getElementsByClassName("entry");
+var form = document.getElementById("create-event-form");
+var addMeatButton = document.getElementById("add-meat");
 
+// Bulma calendar options
+var options = {
+  type: "date",
+  dateFormat: "YYYY-MM-DD",
+  displayMode: "default"
+};
 
+// Set up calendar and listeners
+bulmaCalendar.attach('[type="date"]', options);
+form.onsubmit = submitForm;
+addMeatButton.onclick = addMeat;
+choice.onclick = () => choice.classList.remove("meat-select-placeholder");
+
+// populate meats variable
 for (var item of entries) {
   var children = item.children;
   var id = children[1].id.split("-")[1];
@@ -16,6 +31,7 @@ for (var item of entries) {
     name: children[0].innerHTML
   };
 }
+// end setup
 
 function removeMeat(item) {
   var target = item.target;
@@ -34,8 +50,7 @@ function checkIfSelected() {
   return false;
 }
 
-var form = document.getElementById("create-event-form");
-form.onsubmit = function(event) {
+function submitForm(event) {
   event.preventDefault();
 
   var input = document.createElement("input");
@@ -47,7 +62,12 @@ form.onsubmit = function(event) {
   form.submit();
 };
 
-document.getElementById("add-meat").onclick = function addMeat() {
+function addMeat() {
+  if (choice.selectedIndex === 0) {
+    return;
+  }
+
+  choice.classList.remove("meat-select-placeholder");
   var meat = choice[choice.selectedIndex];
 
   if (meats[meat.value] === undefined || meats[meat.value].selected === false) {
@@ -74,12 +94,3 @@ document.getElementById("add-meat").onclick = function addMeat() {
     };
   }
 };
-
-// Set up bulma calendar
-var options = {
-  type: "date",
-  dateFormat: "YYYY-MM-DD",
-  displayMode: "default"
-};
-
-bulmaCalendar.attach('[type="date"]', options);

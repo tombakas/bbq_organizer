@@ -1,7 +1,10 @@
+@import "bulma/sass/utilities/initial-variables.sass";
 @import 'bulma-calendar/dist/css/bulma-calendar.min';
 
+$button-padding-top: 3px;
+
 div.datetimepicker-dummy {
-  width: 200px;
+  width: 215;
 }
 
 div.datetimepicker {
@@ -18,6 +21,10 @@ input.datetimepicker-dummy-input {
 
 button::-moz-focus-inner {
   border: 0;
+}
+
+select.meat-select-placeholder {
+  color: $grey-light;
 }
 
 .form-container {
@@ -40,6 +47,7 @@ button::-moz-focus-inner {
 
     .meat-select-control {
       display: flex;
+      padding-top: $button-padding-top;
       justify-content: space-between;
     }
 
@@ -50,7 +58,7 @@ button::-moz-focus-inner {
     #meats-chosen {
       .entry {
         width: 100%;
-        padding-top: 3px;
+        padding-top: $button-padding-top;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -63,6 +71,4 @@ button::-moz-focus-inner {
       }
     }
   }
-
-
 }
