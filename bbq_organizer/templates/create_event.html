@@ -25,14 +25,6 @@
       <p class="meats-heading">
         <span class="has-text-weight-bold has-text-right">Selected meats:</span>
       </p>
-      <div id="meats-chosen">
-        {% for key, value in meats_chosen.items %}
-          <div class="entry">
-            <span>{{ value.name }}</span>
-            <div class="button is-danger" id="meat-{{ key }}">-</div>
-          </div>
-        {% endfor %}
-      </div>
       <div class="meat-select-control">
         <div class="select">
           <select id="meat-select" class="meat-select-placeholder">
@@ -43,6 +35,14 @@
           </select>
         </div>
         <div class="button is-primary" id="add-meat">+</div>
+      </div>
+      <div id="meats-chosen">
+        {% for key, value in meats_chosen.items %}
+          <div class="entry">
+            <span>{{ value.name }}</span>
+            <div class="button is-danger" id="meat-{{ key }}">-</div>
+          </div>
+        {% endfor %}
       </div>
     </form>
   </div>

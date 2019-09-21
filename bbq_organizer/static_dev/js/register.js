@@ -32,8 +32,8 @@ register.onclick = function addMeat() {
   };
 
   fetch(`/events/invite/register/${slug}`, {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify(body), // data can be `string` or {object}!
+    method: 'POST',
+    body: JSON.stringify(body),
     headers:{
       'Content-Type': 'application/json'
     }
