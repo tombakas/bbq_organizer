@@ -1,5 +1,7 @@
 import json
 
+from json.decoder import JSONDecodeError
+
 from collections import defaultdict
 
 from django.http import (
@@ -22,7 +24,7 @@ from bbq_organizer.models import MeatOption
 from bbq_organizer.models import MeatChoice
 from bbq_organizer.models import SignUp
 
-from bbq_organizer import forms
+from bbq_organizer.forms import EventForm
 
 
 @login_required
@@ -35,31 +37,51 @@ def create_event(request):
     meats = MeatType.objects.all().order_by("name")
 
     if request.method == "POST":
-        form = forms.EventForm(request.POST)
+        form = EventForm(request.POST)
+
         if form.is_valid():
+            meats_string = request.POST.get("meats")
+            meats = {}
+            if meats_string:
+                try:
+                    meats = json.loads(meats_string)
+                except JSONDecodeError:
+                    messages.add_message(
+                        request, messages.ERROR, "Malformed meats json"
+                    )
+                    return redirect("/error/")
+
             intermediate_form = form.save(commit=False)
             intermediate_form.author = request.user
             event = intermediate_form.save()
-            slug = event.slug
 
-            meats = json.loads(request.POST["meats"])
             for key, value in meats.items():
                 if value:
                     option = MeatOption(event=event, meat_id=key)
                     option.save()
-            return redirect("/events/admin/{}".format(slug))
-    else:
-        form = forms.EventForm()
 
+            return redirect("/events/admin/{}".format(event.slug))
+    else:
+        form = EventForm()
+
+    # Return meats selected so far in case the form is not valid
     meats_chosen = {}
     meats_chosen_string = request.POST.get("meats")
     if meats_chosen_string:
-        meats_chosen = json.loads(meats_chosen_string)
+        try:
+            meats_chosen = json.loads(meats_chosen_string)
+        except JSONDecodeError:
+            messages.add_message(
+                request, messages.ERROR, "Malformed meats json"
+            )
+            return redirect("/error/")
 
+    # Remove meats that were chosen and unselected
     keys = list(meats_chosen.keys())
     for key in keys:
-        if meats_chosen[key]["selected"] is False:
+        if meats_chosen[key] is False:
             del meats_chosen[key]
+
     return render(
         request,
         "create_event.html",
@@ -71,8 +93,13 @@ def create_event(request):
 def admin_event(request, slug):
     event = Event.objects.filter(slug=slug).first()
     if event is None:
-        return redirect("/")
+        messages.add_message(
+            request, messages.ERROR, "Event does not exist"
+        )
+        return redirect("/error/")
+
     host = request.get_host()
+    url = "{}/events/invite/{}".format(host, event.slug)
 
     signups = SignUp.objects.filter(event__pk=event.id)
     meatchoices = []
@@ -86,24 +113,23 @@ def admin_event(request, slug):
     for meatchoice in meatchoices:
         meat_count[meatchoice.meat.name] += 1
 
-    if event:
-        return render(
-            request,
-            "admin_event.html",
-            {
-                "event": event,
-                "host": host,
-                "meats": dict(meat_count),
-                "signups": signups,
-                "total": total,
-            },
-        )
-    else:
-        return redirect("/")
+    return render(
+        request,
+        "admin_event.html",
+        {
+            "event": event,
+            "url": url,
+            "meats": dict(meat_count),
+            "signups": signups,
+            "total": total,
+        },
+    )
 
 
 def invite_event(request, slug):
     value = request.COOKIES.get("registered")
+    print("COOKIES", request.COOKIES)
+    print(dir(request))
     if value != slug:
         event = Event.objects.filter(slug=slug).first()
         if event:

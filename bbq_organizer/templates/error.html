@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="content">
+    <div class="notification-top has-background-danger">
+      <h3 class="has-text-white">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </h3>
+    </div>
+  </div>
+
+{% endblock %}

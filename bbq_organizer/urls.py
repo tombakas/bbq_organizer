@@ -12,8 +12,9 @@ urlpatterns = [
     path("events/invite/<str:slug>", views.invite_event, name="invite_event"),
     path("events/delete/", views.delete_event, name="delete_event"),
     path("events/invite/register/<str:slug>", views.register_event, name="register_event"),
-    path("events/list", views.events_list, name="events_list"),
-    path("thank_you", TemplateView.as_view(template_name="thank_you.html")),
-    path("does_not_exist", TemplateView.as_view(template_name="does_not_exist.html")),
-    path("already_registered", TemplateView.as_view(template_name="already_registered.html")),
+    path("events/list/", views.events_list, name="events_list"),
+    path("thank_you/", TemplateView.as_view(template_name="thank_you.html")),
+    path("error/", TemplateView.as_view(template_name="error.html")),
+    path("does_not_exist/", TemplateView.as_view(template_name="does_not_exist.html")),
+    path("already_registered/", TemplateView.as_view(template_name="already_registered.html")),
 ]

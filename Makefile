@@ -10,6 +10,7 @@ ADMIN = $(PYBIN)/django-admin
 PYTHON_PATH = $(BASEDIR)
 
 SETTINGS_DEV_SQLITE = "config.settings.dev_sqlite"
+SETTINGS_TEST = "config.settings.test"
 
 DJANGO_CONTAINER = \
 	$(shell awk '/^  [a-z]/{django=0}/django:/{django=1}/container_name/{if(django){print $$2}}' compose/dev.yml)
@@ -36,6 +37,10 @@ migrate:
 .PHONY: _lmigrate
 _lmigrate: $(PYTHON) $(ADMIN)
 	$(ADMIN) migrate --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_DEV_SQLITE)
+
+.PHONY: test
+test: $(PYTHON) $(ADMIN)
+	$(ADMIN) test --pythonpath $(PYTHON_PATH) --settings $(SETTINGS_TEST)
 
 .PHONY: data
 data:

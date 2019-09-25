@@ -21,3 +21,11 @@ node_modules
 # js
 **/static
 .cache
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
