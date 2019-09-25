@@ -147,8 +147,9 @@ def register_event(request, slug):
         value = request.COOKIES.get("registered")
         if value != slug:
             data = json.loads(request.body)
-            extras = data["extras"]
-            name = data["name"]
+            extras = data.get("extras", 0)
+            name = data.get("name", "")
+            meats = data.get("meats", [])
             event = Event.objects.filter(slug=slug).first()
             if event is None:
                 return HttpResponseNotFound()
@@ -159,10 +160,23 @@ def register_event(request, slug):
             signup = SignUp(event=event, extras=extras, name=name)
             signup = signup.save()
 
-            for meat in data["meats"]:
-                meat_id = int(meat)
-                meat_choice = MeatChoice(signup=signup, meat_id=meat_id)
-                meat_choice.save()
+            for meat in meats:
+                try:
+                    meat_id = int(meat)
+                    meat = MeatType.objects.filter(pk=meat_id).first()
+                    if meat is not None:
+                        meat_choice = MeatChoice(signup=signup, meat_id=meat_id)
+                        meat_choice.save()
+                    else:
+                        messages.add_message(
+                            request, messages.ERROR, "Invalid meat value"
+                        )
+                        return redirect("/error/")
+                except ValueError:
+                    messages.add_message(
+                        request, messages.ERROR, "Invalid meat value"
+                    )
+                    return redirect("/error/")
 
             response = HttpResponse()
             response.set_cookie("registered", slug)
@@ -202,7 +216,10 @@ def delete_event(request):
         try:
             Event.objects.get(slug=data["slug"]).delete()
         except Event.DoesNotExist:
-            pass
+            messages.add_message(
+                request, messages.ERROR, "Event does not exist"
+            )
+            return redirect("/error/")
 
         return HttpResponse("")
 

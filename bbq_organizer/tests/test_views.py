@@ -1,7 +1,5 @@
 import json
 
-from django.http import SimpleCookie
-
 from random import randint
 from datetime import datetime as dt
 from datetime import timedelta as td
@@ -244,14 +242,253 @@ class TestInviteEventView(TestCase):
         self.event = Event(date=self.now, author=self.user).save()
 
     def test_url_resolves_to_view(self):
-        found = resolve("/events/invite/register/{}".format(self.event.slug))
-        self.assertEqual(found.func, bbq_views.register_event)
+        found = resolve("/events/invite/{}".format(self.event.slug))
+        self.assertEqual(found.func, bbq_views.invite_event)
 
     def test_new_registration(self):
         self.client.login(username="bbq_user", password="secret")
         response = self.client.get(
-            "/events/invite/register/{}".format(self.event.slug),
-            {"slug": self.event.slug},
+            "/events/invite/{}".format(self.event.slug), {"slug": self.event.slug}
         )
 
         self.assertEqual(response.status_code, 200)
+
+    def test_existing_registration(self):
+        self.client.login(username="bbq_user", password="secret")
+        self.client.cookies["registered"] = self.event.slug
+        response = self.client.get(
+            "/events/invite/{}".format(self.event.slug), {"slug": self.event.slug}
+        )
+
+        self.assertContains(
+            response, "Your are already registered for this event.", status_code=200
+        )
+
+    def test_non_existing(self):
+        slug = "bad_slug"
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.get("/events/invite/{}".format(slug), {"slug": slug})
+
+        self.assertContains(
+            response, "The event specified does not exist", status_code=200
+        )
+
+
+class TestRegisterEventView(TestCase):
+    def setUp(self):
+        self.password = "secret"
+        self.user = User.objects.create_user(
+            username="bbq_user", password=self.password
+        )
+        self.now = dt.now().strftime("%Y-%m-%d")
+        self.event = Event(date=self.now, author=self.user).save()
+        self.meat_1 = MeatType(name="Bacon")
+        self.meat_1.save()
+
+    def test_url_resolves_to_view(self):
+        found = resolve("/events/invite/register/{}".format(self.event.slug))
+        self.assertEqual(found.func, bbq_views.register_event)
+
+    def test_not_logged_in(self):
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug)
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_register_valid_data(self):
+        body = {"meats": [self.meat_1.pk], "extras": "0", "name": "test"}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.cookies.get("registered").value, self.event.slug)
+
+    def test_register_invalid_meat_id(self):
+        body = {"meats": ["1000"], "extras": "0", "name": "test"}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/error/")
+
+    def test_register_invalid_number_meat_id(self):
+        body = {"meats": ["abc"], "extras": "0", "name": "test"}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/error/")
+
+    def test_register_invalid_event(self):
+        body = {"meats": ["abc"], "extras": "0", "name": "test"}
+        slug = "bad_slug"
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_register_non_numeric_extras(self):
+        body = {"meats": [], "extras": "abc", "name": "test"}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_already_registered(self):
+        body = {"meats": [], "extras": "0", "name": "test"}
+
+        self.client.cookies["registered"] = self.event.slug
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 403)
+
+    def test_using_get(self):
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.get("/events/invite/register/{}".format(self.event.slug))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your are already registered for this event.")
+
+
+class TestEventsListView(TestCase):
+    def setUp(self):
+        self.password = "secret"
+        self.user = User.objects.create_user(
+            username="bbq_user", password=self.password
+        )
+        self.now = dt.now().strftime("%Y-%m-%d")
+        self.event_1 = Event(date=self.now, author=self.user)
+        self.event_1.save()
+
+        self.event_2 = Event(date=self.now, author=self.user)
+        self.event_2.save()
+
+    def test_url_resolves_to_view(self):
+        found = resolve("/events/list/")
+        self.assertEqual(found.func, bbq_views.events_list)
+
+    def test_all_events_shown(self):
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.get("/events/list/")
+
+        request_event_set = {self.event_1, self.event_2}
+        response_event_set = {event for event in response.context["events"]}
+        self.assertEqual(request_event_set, response_event_set)
+
+
+class TestSignupView(TestCase):
+    def test_url_resolves_to_view(self):
+        found = resolve("/signup/")
+        self.assertEqual(found.func, bbq_views.signup)
+
+    def test_get(self):
+        response = self.client.get("/signup/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_valid_signup(self):
+        password = "ABCabc123!@#"
+        username = "bbq_user"
+
+        body = {
+            "username": username,
+            "password1": password,
+            "password2": password
+        }
+
+        response = self.client.post("/signup/", data=body)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/accounts/login/")
+
+    def test_invalid_signup(self):
+        username = "bbq_user"
+
+        body = {
+            "username": username,
+            "password1": "bad_pass_1",
+            "password2": "bad_pass_2"
+        }
+
+        response = self.client.post("/signup/", data=body)
+        self.assertEqual(response.status_code, 200)
+
+
+class TestDeleteEventView(TestCase):
+    def setUp(self):
+        self.password = "secret"
+        self.user = User.objects.create_user(
+            username="bbq_user", password=self.password
+        )
+        self.now = dt.now().strftime("%Y-%m-%d")
+        self.event = Event(date=self.now, author=self.user)
+        self.event.save()
+
+    def test_url_resolves_to_view(self):
+        found = resolve("/events/delete/")
+        self.assertEqual(found.func, bbq_views.delete_event)
+
+    def test_delete_existing_event(self):
+        body = {"slug": self.event.slug}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/delete/",
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_non_logged_in(self):
+        body = {"slug": self.event.slug}
+
+        response = self.client.post(
+            "/events/delete/",
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+
+        url = response.url.split("?")[0]
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(url, "/accounts/login/")
+
+    def test_delete_non_existing(self):
+        body = {"slug": "does_not_exist"}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/delete/",
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/error/")
+
+
+class Test404View(TestCase):
+    def test_non_existing_url(self):
+        response = self.client.get("/this/url/does/not/exist")
+        self.assertEqual(response.status_code, 302)
