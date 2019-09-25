@@ -23,12 +23,13 @@ Tu be run on first deployment and when needed:
 * Populating database with data fixtures: `make data`
 * Compiling css and js: `make build`
 * Compiling css and js continuously: `make watch`
+* Running tests: `make test`
 
  
-### Where are the tests?
+### Tests
 
-They should be released with the rollout of the next version. Crunch time
-resulted in tests becoming second priority after features.
+The project currently has 100% test coverage:
+![Test coverage](https://i.imgur.com/wlQtHiN.png)
 
 ### Makefile commands:
 * **run**: Run local server using sqlite
