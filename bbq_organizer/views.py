@@ -147,16 +147,25 @@ def register_event(request, slug):
         value = request.COOKIES.get("registered")
         if value != slug:
             data = json.loads(request.body)
+
             extras = data.get("extras", 0)
             name = data.get("name", "")
             meats = data.get("meats", [])
             event = Event.objects.filter(slug=slug).first()
+
             if event is None:
                 return HttpResponseNotFound()
+
             try:
                 extras = int(extras)
             except ValueError:
-                return HttpResponseBadRequest()
+                return HttpResponseBadRequest("invalid numeric value")
+            if extras < 0:
+                return HttpResponseBadRequest("extras cannot be less than 0")
+
+            if name == "":
+                return HttpResponseBadRequest("name cannot be blank")
+
             signup = SignUp(event=event, extras=extras, name=name)
             signup = signup.save()
 

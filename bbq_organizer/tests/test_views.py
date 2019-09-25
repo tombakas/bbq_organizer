@@ -353,6 +353,31 @@ class TestRegisterEventView(TestCase):
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content.decode("utf-8"), "invalid numeric value")
+
+    def test_register_extras_less_than_zero(self):
+        body = {"meats": [], "extras": "-1", "name": ""}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content.decode("utf-8"), "extras cannot be less than 0")
+
+    def test_register_empty_name(self):
+        body = {"meats": [], "extras": "0", "name": ""}
+
+        self.client.login(username="bbq_user", password="secret")
+        response = self.client.post(
+            "/events/invite/register/{}".format(self.event.slug),
+            data=json.dumps(body),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content.decode("utf-8"), "name cannot be blank")
 
     def test_already_registered(self):
         body = {"meats": [], "extras": "0", "name": "test"}
