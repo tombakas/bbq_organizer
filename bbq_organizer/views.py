@@ -128,8 +128,6 @@ def admin_event(request, slug):
 
 def invite_event(request, slug):
     value = request.COOKIES.get("registered")
-    print("COOKIES", request.COOKIES)
-    print(dir(request))
     if value != slug:
         event = Event.objects.filter(slug=slug).first()
         if event:
