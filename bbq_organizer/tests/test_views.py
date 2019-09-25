@@ -452,6 +452,9 @@ class TestDeleteEventView(TestCase):
     def test_delete_existing_event(self):
         body = {"slug": self.event.slug}
 
+        query_event = Event.objects.filter(slug=self.event.slug)
+        self.assertEqual(len(query_event), 1)
+
         self.client.login(username="bbq_user", password="secret")
         response = self.client.post(
             "/events/delete/",
@@ -459,7 +462,10 @@ class TestDeleteEventView(TestCase):
             content_type="application/json",
         )
 
+        query_event = Event.objects.filter(slug=self.event.slug)
+
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(query_event), 0)
 
     def test_delete_non_logged_in(self):
         body = {"slug": self.event.slug}
